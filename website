@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leobrain Technology</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --navy:#0B2A4A; --navy-deep:#081D34; --blue:#1F6FD1; --blue-bright:#3A93F0;
+    --ice:#EAF3FC; --white:#FFFFFF; --ink:#0B2A4A; --muted:#4C6B8A; --line:#CFE1F5; --power:#F4A100;
+    --danger:#D64545; --success:#2E9E5B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Inter',sans-serif; color:var(--ink); background:var(--ice);}
+  a{color:inherit;}
+  button{font-family:inherit; cursor:pointer;}
+  .hidden{display:none !important;}
+
+  /* ===== TOP NAV ===== */
+  .topnav{
+    background:linear-gradient(120deg,var(--navy-deep),var(--navy));
+    color:var(--white); padding:12px 22px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    position:sticky; top:0; z-index:50;
+  }
+  .topnav .brand{display:flex; align-items:center; gap:10px; font-family:'Poppins',sans-serif; font-weight:800; font-size:16px;}
+  .topnav .brand svg{width:28px; height:28px;}
+  .navlinks{display:flex; gap:8px; align-items:center; flex-wrap:wrap;}
+  .navlinks button{
+    background:transparent; border:1px solid rgba(255,255,255,0.35); color:var(--white);
+    padding:7px 14px; border-radius:6px; font-size:12.5px; font-weight:600;
+  }
+  .navlinks button.active, .navlinks button:hover{background:var(--blue); border-color:var(--blue);}
+  .navlinks .pill{
+    background:var(--power); color:var(--navy-deep); border:none; font-weight:700;
+  }
+
+  .sheet{max-width:1040px; margin:0 auto; background:var(--white);}
+  .page{padding:26px 24px 40px;}
+
+  /* ===== HERO (home) ===== */
+  .hero{
+    display:grid; grid-template-columns:1.05fr 1.4fr;
+    background:linear-gradient(135deg,var(--navy-deep),var(--navy) 55%,var(--blue) 130%);
+    position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background-image: radial-gradient(circle at 90% 10%, rgba(58,147,240,0.35), transparent 45%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 26px);
+    pointer-events:none;
+  }
+  .brand-block{padding:34px 28px 30px; display:flex; flex-direction:column; justify-content:center; gap:14px; position:relative; z-index:1;}
+  .logo-row{display:flex; align-items:center; gap:14px;}
+  .logo-icon{width:56px; height:56px; flex:none;}
+  .brand-name{font-family:'Poppins',sans-serif; font-weight:800; font-size:28px; line-height:1.05; color:var(--white);}
+  .brand-sub{font-family:'Poppins',sans-serif; font-weight:600; font-size:12px; letter-spacing:1.5px; color:var(--blue-bright); margin-top:2px;}
+  .motto{font-style:italic; color:#BFD8F5; font-size:13px;}
+  .hero-right{padding:30px 30px 30px 10px; display:flex; flex-direction:column; justify-content:center; gap:10px; position:relative; z-index:1;}
+  .hero-headline{font-family:'Poppins',sans-serif; font-weight:700; font-size:25px; color:var(--white); line-height:1.15;}
+  .hero-headline em{font-style:normal; color:var(--power);}
+  .hero-copy{color:#D3E4F7; font-size:13.5px; line-height:1.5; max-width:420px;}
+
+  .icon-strip{display:flex; justify-content:space-between; gap:6px; padding:14px 22px; background:var(--ice); border-bottom:1px solid var(--line); flex-wrap:wrap;}
+  .icon-item{display:flex; align-items:center; gap:8px; font-size:11px; font-weight:600; color:var(--navy);}
+  .icon-circle{width:28px; height:28px; border-radius:50%; background:var(--white); border:2px solid var(--blue); display:flex; align-items:center; justify-content:center; flex:none;}
+
+  .body-grid{display:grid; grid-template-columns:230px 1fr;}
+  .sidebar{padding:24px 20px; border-right:1px solid var(--line);}
+  .sidebar h2{font-family:'Poppins',sans-serif; font-size:19px; font-weight:800; color:var(--navy); margin-bottom:6px;}
+  .sidebar p.lead{font-size:12px; color:var(--muted); line-height:1.5; margin-bottom:16px;}
+  .svc{display:flex; gap:10px; padding:9px 0; border-bottom:1px dashed var(--line);}
+  .svc:last-child{border-bottom:none;}
+  .svc-dot{width:24px; height:24px; border-radius:8px; background:var(--navy); flex:none; display:flex; align-items:center; justify-content:center;}
+  .svc-dot span{width:7px; height:7px; border-radius:50%; background:var(--power);}
+  .svc h3{font-size:12px; font-weight:700; color:var(--navy);}
+  .svc p{font-size:10.4px; color:var(--muted); line-height:1.3; margin-top:2px;}
+
+  .main{padding:22px 22px 6px;}
+  .section-title{display:flex; align-items:center; gap:10px; background:var(--navy); color:var(--white); font-family:'Poppins',sans-serif; font-weight:700; font-size:13.5px; padding:9px 14px; border-radius:6px; margin-bottom:12px;}
+  .section-title .power-dot{width:9px; height:9px; border-radius:50%; background:var(--power);}
+  .pkg-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:18px;}
+  .pkg{border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+  .pkg-head{padding:8px 12px; font-family:'Poppins',sans-serif; font-weight:700; font-size:11.5px; color:var(--white);}
+  .pkg.basic .pkg-head{background:var(--power);}
+  .pkg.mid .pkg-head{background:var(--blue);}
+  .pkg.premium .pkg-head{background:var(--navy);}
+  .pkg ul{list-style:none; padding:10px 12px 12px;}
+  .pkg li{font-size:10.3px; padding-left:14px; position:relative; margin-bottom:5px; line-height:1.3;}
+  .pkg li::before{content:"▸"; position:absolute; left:0; color:var(--blue); font-size:10px;}
+
+  /* ===== FORM (request/feedback) ===== */
+  .request-card{background:var(--ice); border:1px solid var(--line); border-radius:10px; padding:20px; margin:22px; }
+  .request-card h3{font-family:'Poppins',sans-serif; color:var(--navy); font-size:16px; margin-bottom:4px;}
+  .request-card p{font-size:12px; color:var(--muted); margin-bottom:14px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;}
+  .form-row.full{grid-template-columns:1fr;}
+  input, textarea, select{
+    width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:6px;
+    font-family:'Inter',sans-serif; font-size:13px; background:var(--white); color:var(--ink);
+  }
+  textarea{min-height:90px; resize:vertical;}
+  .btn{
+    background:var(--blue); color:var(--white); border:none; padding:10px 18px;
+    border-radius:6px; font-weight:700; font-size:13px;
+  }
+  .btn:hover{background:var(--blue-bright);}
+  .btn.ghost{background:transparent; border:1px solid var(--blue); color:var(--blue);}
+  .btn.power{background:var(--power); color:var(--navy-deep);}
+  .form-msg{font-size:12px; margin-top:8px; font-weight:600;}
+  .form-msg.ok{color:var(--success);}
+  .form-msg.err{color:var(--danger);}
+
+  .footer{background:linear-gradient(120deg,var(--navy-deep),var(--navy)); color:var(--white); padding:18px 26px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .footer .tag{font-family:'Poppins',sans-serif; font-style:italic; font-weight:600; font-size:14px; color:var(--power);}
+  .footer .contact{font-size:11.5px; color:#D3E4F7; display:flex; gap:14px; flex-wrap:wrap;}
+
+  /* ===== AUTH PAGES ===== */
+  .auth-wrap{max-width:420px; margin:50px auto; background:var(--white); border:1px solid var(--line); border-radius:12px; padding:30px; box-shadow:0 10px 30px rgba(11,42,74,0.08);}
+  .auth-wrap h2{font-family:'Poppins',sans-serif; color:var(--navy); font-size:20px; margin-bottom:4px;}
+  .auth-wrap p.sub{font-size:12.5px; color:var(--muted); margin-bottom:18px;}
+  .tabbar{display:flex; gap:6px; margin-bottom:18px; background:var(--ice); padding:4px; border-radius:8px;}
+  .tabbar button{flex:1; padding:9px; border:none; background:transparent; border-radius:6px; font-weight:700; font-size:12.5px; color:var(--muted);}
+  .tabbar button.active{background:var(--navy); color:var(--white);}
+  .field{margin-bottom:12px;}
+  .field label{display:block; font-size:11.5px; font-weight:600; color:var(--navy); margin-bottom:4px;}
+  .hint{font-size:11px; color:var(--muted); margin-top:10px; text-align:center;}
+  .hint b{color:var(--navy);}
+
+  /* ===== DASHBOARDS ===== */
+  .dash-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:10px;}
+  .dash-head h1{font-family:'Poppins',sans-serif; color:var(--navy); font-size:22px;}
+  .dash-head .sub{font-size:12.5px; color:var(--muted);}
+  .tabs{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
+  .tabs button{padding:8px 14px; border:1px solid var(--line); background:var(--white); border-radius:20px; font-size:12px; font-weight:700; color:var(--navy);}
+  .tabs button.active{background:var(--navy); color:var(--white); border-color:var(--navy);}
+  .card{border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:12px; background:var(--white);}
+  .card h4{font-family:'Poppins',sans-serif; color:var(--navy); font-size:13.5px; margin-bottom:4px;}
+  .card .meta{font-size:10.5px; color:var(--muted); margin-bottom:6px;}
+  .card p{font-size:12.5px; line-height:1.45;}
+  .empty-note{font-size:12.5px; color:var(--muted); padding:14px; text-align:center; border:1px dashed var(--line); border-radius:8px;}
+
+  /* ===== CHAT ===== */
+  .chat-box{border:1px solid var(--line); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; height:430px; max-width:560px;}
+  .chat-header{background:var(--navy); color:var(--white); padding:12px 16px; font-weight:700; font-size:13px; display:flex; justify-content:space-between; align-items:center;}
+  .chat-header .status{width:8px; height:8px; border-radius:50%; background:var(--success); display:inline-block; margin-right:6px;}
+  .chat-messages{flex:1; overflow-y:auto; padding:14px; background:var(--ice); display:flex; flex-direction:column; gap:8px;}
+  .bubble{max-width:75%; padding:8px 12px; border-radius:12px; font-size:12.5px; line-height:1.4;}
+  .bubble.me{align-self:flex-end; background:var(--blue); color:var(--white); border-bottom-right-radius:2px;}
+  .bubble.them{align-self:flex-start; background:var(--white); border:1px solid var(--line); border-bottom-left-radius:2px;}
+  .bubble .t{display:block; font-size:9px; opacity:0.7; margin-top:3px;}
+  .chat-input{display:flex; gap:8px; padding:10px; border-top:1px solid var(--line); background:var(--white);}
+  .chat-input input{flex:1;}
+  .chat-list-item{display:flex; justify-content:space-between; align-items:center; padding:10px 12px; border:1px solid var(--line); border-radius:8px; margin-bottom:8px; cursor:pointer;}
+  .chat-list-item:hover{background:var(--ice);}
+  .chat-list-item .name{font-weight:700; font-size:12.5px; color:var(--navy);}
+  .chat-list-item .preview{font-size:11px; color:var(--muted);}
+  .unread{background:var(--power); color:var(--navy-deep); font-size:9.5px; font-weight:800; padding:2px 7px; border-radius:10px;}
+
+  @media (max-width:720px){
+    .hero{grid-template-columns:1fr;}
+    .body-grid{grid-template-columns:1fr;}
+    .sidebar{border-right:none; border-bottom:1px solid var(--line);}
+    .pkg-grid, .form-row{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <div class="brand">
+    <svg viewBox="0 0 100 100"><path d="M18 60 C10 45, 20 28, 38 28 C34 20, 42 12, 50 16 C56 8, 68 10, 70 20 C82 20, 90 32, 82 44" fill="none" stroke="#3A93F0" stroke-width="7" stroke-linecap="round"/><rect x="30" y="30" width="40" height="26" rx="2" fill="none" stroke="#EAF3FC" stroke-width="5"/><circle cx="50" cy="43" r="6" fill="none" stroke="#F4A100" stroke-width="4"/><line x1="50" y1="39" x2="50" y2="43" stroke="#F4A100" stroke-width="4" stroke-linecap="round"/></svg>
+    Leobrain Technology
+  </div>
+  <div class="navlinks" id="navlinks">
+    <button data-nav="home" class="active">Home</button>
+    <button data-nav="adminLogin" id="navAdminBtn">Admin Login</button>
+    <button data-nav="userAuth" id="navUserBtn" class="pill">User Login / Register</button>
+  </div>
+</div>
+
+<!-- ======================= HOME ======================= -->
+<div id="view-home" class="page-view">
+  <div class="sheet">
+    <div class="hero">
+      <div class="brand-block">
+        <div class="logo-row">
+          <svg class="logo-icon" viewBox="0 0 100 100">
+            <path d="M18 60 C10 45, 20 28, 38 28 C34 20, 42 12, 50 16 C56 8, 68 10, 70 20 C82 20, 90 32, 82 44" fill="none" stroke="#3A93F0" stroke-width="6" stroke-linecap="round"/>
+            <rect x="30" y="30" width="40" height="26" rx="2" fill="none" stroke="#EAF3FC" stroke-width="4"/>
+            <circle cx="50" cy="43" r="6" fill="none" stroke="#F4A100" stroke-width="3.5"/>
+            <line x1="50" y1="39" x2="50" y2="43" stroke="#F4A100" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M22 66 L78 66 L74 74 L26 74 Z" fill="#0B2A4A" stroke="#3A93F0" stroke-width="2"/>
+          </svg>
+          <div class="brand-name">LEOBRAIN<br>TECHNOLOGY</div>
+        </div>
+        <div class="brand-sub">COMMUNICATION &amp; COMPUTER ENGINEER</div>
+        <div class="motto">Motto: Life Of New Age Tech</div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-headline">Your Vision,<br><em>Our Engineering</em></div>
+        <div class="hero-copy">From sharp graphic design to reliable device repair and software support, we keep your brand and your tech running at their best.</div>
+      </div>
+    </div>
+
+    <div class="icon-strip">
+      <div class="icon-item"><span class="icon-circle">🖉</span>Flyer &amp; Graphic Design</div>
+      <div class="icon-item"><span class="icon-circle">◎</span>Logo Design</div>
+      <div class="icon-item"><span class="icon-circle">⛊</span>Brand Identity</div>
+      <div class="icon-item"><span class="icon-circle">▤</span>Social Media Design</div>
+      <div class="icon-item"><span class="icon-circle">▶</span>Video Advertisement</div>
+      <div class="icon-item"><span class="icon-circle">✎</span>Software &amp; Repairs</div>
+    </div>
+
+    <div class="body-grid">
+      <div class="sidebar">
+        <h2>OUR SERVICES</h2>
+        <p class="lead">A complete range of design and technology services to keep your brand and your devices running smoothly.</p>
+        <div class="svc"><div class="svc-dot"><span></span></div><div><h3>Flyer &amp; Graphic Design</h3><p>Professional, eye-catching designs for all your marketing needs.</p></div></div>
+        <div class="svc"><div class="svc-dot"><span></span></div><div><h3>Logo Design</h3><p>Unique and memorable logos that represent your brand.</p></div></div>
+        <div class="svc"><div class="svc-dot"><span></span></div><div><h3>Brand Identity</h3><p>Build a strong, consistent brand image across all platforms.</p></div></div>
+        <div class="svc"><div class="svc-dot"><span></span></div><div><h3>Social Media Design</h3><p>Engaging visuals for Facebook, Instagram, Twitter and more.</p></div></div>
+        <div class="svc"><div class="svc-dot"><span></span></div><div><h3>Video Advertisement</h3><p>Short and long-form videos that attract and convert.</p></div></div>
+        <div class="svc"><div class="svc-dot"><span></span></div><div><h3>Document Drafting &amp; Software</h3><p>Professional document drafting and software engineering support.</p></div></div>
+        <div class="svc"><div class="svc-dot"><span></span></div><div><h3>Computer &amp; Printer Repair</h3><p>Repair of HP printers, computers and laptops.</p></div></div>
+      </div>
+
+      <div class="main">
+        <div class="section-title"><span class="power-dot"></span>FLYER PACKAGES</div>
+        <div class="pkg-grid">
+          <div class="pkg basic"><div class="pkg-head">BASIC</div><ul><li>1 professional flyer</li><li>1–2 revisions</li><li>JPG/PNG</li><li>24–48 hr delivery</li></ul></div>
+          <div class="pkg mid"><div class="pkg-head">BUSINESS</div><ul><li>Custom design</li><li>Image enhancement</li><li>2–3 revisions</li><li>Social media version</li></ul></div>
+          <div class="pkg premium"><div class="pkg-head">PREMIUM</div><ul><li>High-end design</li><li>Advanced visual effects</li><li>Up to 4 revisions</li><li>Social + print version</li></ul></div>
+        </div>
+
+        <div class="section-title"><span class="power-dot"></span>LOGO &amp; BRANDING PACKAGES</div>
+        <div class="pkg-grid">
+          <div class="pkg basic"><div class="pkg-head">STARTER</div><ul><li>1 logo concept</li><li>2 revisions</li><li>Transparent background</li></ul></div>
+          <div class="pkg mid"><div class="pkg-head">PROFESSIONAL</div><ul><li>2–3 concepts</li><li>Brand color palette</li><li>Business card + templates</li></ul></div>
+          <div class="pkg premium"><div class="pkg-head">COMPLETE IDENTITY</div><ul><li>Full logo system</li><li>Brand guidelines</li><li>Social + promo material pack</li></ul></div>
+        </div>
+
+        <div class="section-title"><span class="power-dot"></span>VIDEO &amp; TECH SUPPORT</div>
+        <div class="pkg-grid">
+          <div class="pkg basic"><div class="pkg-head">BASIC VIDEO</div><ul><li>15–30 seconds</li><li>Text animation</li><li>1 revision</li></ul></div>
+          <div class="pkg mid"><div class="pkg-head">DEVICE REPAIR</div><ul><li>Laptop &amp; PC diagnostics</li><li>HP printer repair</li><li>Software installs</li></ul></div>
+          <div class="pkg premium"><div class="pkg-head">SOFTWARE &amp; DOCS</div><ul><li>Document drafting</li><li>Software engineering</li><li>Ongoing support</li></ul></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="request-card">
+      <h3>Request a Quote / Send Feedback</h3>
+      <p>Tell us what you need — we'll get back to you, and your message also lands directly in our admin dashboard.</p>
+      <form id="feedbackForm">
+        <div class="form-row">
+          <input type="text" id="fbName" placeholder="Your name" required>
+          <input type="email" id="fbEmail" placeholder="Your email" required>
+        </div>
+        <div class="form-row full">
+          <textarea id="fbMessage" placeholder="What do you need help with?" required></textarea>
+        </div>
+        <button type="submit" class="btn power">Send Request</button>
+        <div id="fbMsg" class="form-msg"></div>
+      </form>
+    </div>
+
+    <div class="footer">
+      <div class="tag">Let's Build Something Amazing Together!</div>
+      <div class="contact"><span>📞 +234 902 319 8824</span><span>✉ Isaacleo1611@gmail.com</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= ADMIN LOGIN ======================= -->
+<div id="view-adminLogin" class="page-view hidden">
+  <div class="auth-wrap">
+    <h2>Administrator Login</h2>
+    <p class="sub">Sign in to view requests and live chats.</p>
+    <div class="field"><label>Username</label><input type="text" id="adminUser" placeholder="admin"></div>
+    <div class="field"><label>Password</label><input type="password" id="adminPass" placeholder="••••••••"></div>
+    <button class="btn" style="width:100%" onclick="adminLogin()">Log In</button>
+    <div id="adminLoginMsg" class="form-msg"></div>
+    <div class="hint">Demo credentials: <b>admin</b> / <b>Leobrain@2026</b><br>(change these in the code before going live)</div>
+  </div>
+</div>
+
+<!-- ======================= ADMIN DASHBOARD ======================= -->
+<div id="view-adminDash" class="page-view hidden">
+  <div class="sheet page">
+    <div class="dash-head">
+      <div><h1>Admin Dashboard</h1><div class="sub">Welcome back, Admin</div></div>
+      <button class="btn ghost" onclick="logoutAdmin()">Log Out</button>
+    </div>
+    <div class="tabs">
+      <button class="active" data-atab="requests" onclick="setAdminTab('requests')">Requests &amp; Feedback</button>
+      <button data-atab="chats" onclick="setAdminTab('chats')">Live Chats</button>
+      <button data-atab="users" onclick="setAdminTab('users')">Registered Users</button>
+    </div>
+
+    <div id="adminTab-requests">
+      <div id="requestsList"></div>
+    </div>
+
+    <div id="adminTab-chats" class="hidden" style="display:grid; grid-template-columns:230px 1fr; gap:16px;">
+      <div>
+        <div id="adminChatList"></div>
+      </div>
+      <div>
+        <div id="adminChatEmpty" class="empty-note">Select a conversation to view messages.</div>
+        <div id="adminChatBox" class="chat-box hidden">
+          <div class="chat-header"><span><span class="status"></span><span id="adminChatWith"></span></span></div>
+          <div class="chat-messages" id="adminChatMessages"></div>
+          <div class="chat-input">
+            <input type="text" id="adminChatInput" placeholder="Type a reply...">
+            <button class="btn" onclick="adminSendMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="adminTab-users" class="hidden">
+      <div id="usersList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= USER AUTH ======================= -->
+<div id="view-userAuth" class="page-view hidden">
+  <div class="auth-wrap">
+    <div class="tabbar">
+      <button class="active" id="tabLoginBtn" onclick="setAuthTab('login')">Log In</button>
+      <button id="tabRegisterBtn" onclick="setAuthTab('register')">Register</button>
+    </div>
+
+    <div id="authLogin">
+      <h2>Welcome Back</h2>
+      <p class="sub">Log in to chat with our team and track your requests.</p>
+      <div class="field"><label>Username</label><input type="text" id="loginUser"></div>
+      <div class="field"><label>Password</label><input type="password" id="loginPass"></div>
+      <button class="btn" style="width:100%" onclick="userLogin()">Log In</button>
+      <div id="loginMsg" class="form-msg"></div>
+    </div>
+
+    <div id="authRegister" class="hidden">
+      <h2>Create Your Account</h2>
+      <p class="sub">Register to start a live chat with our admin team.</p>
+      <div class="field"><label>Username</label><input type="text" id="regUser"></div>
+      <div class="field"><label>Email</label><input type="email" id="regEmail"></div>
+      <div class="field"><label>Password</label><input type="password" id="regPass"></div>
+      <button class="btn" style="width:100%" onclick="registerUser()">Register</button>
+      <div id="regMsg" class="form-msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= USER DASHBOARD ======================= -->
+<div id="view-userDash" class="page-view hidden">
+  <div class="sheet page">
+    <div class="dash-head">
+      <div><h1 id="userWelcomeName">Welcome!</h1><div class="sub">Glad to have you here.</div></div>
+      <button class="btn ghost" onclick="logoutUser()">Log Out</button>
+    </div>
+
+    <div class="card">
+      <h4>Need something designed or fixed?</h4>
+      <p>Browse our packages on the <a href="#" onclick="go('home')" style="color:var(--blue); font-weight:700;">Home page</a>, or start a live chat below and our team will help you right away.</p>
+    </div>
+
+    <div class="section-title" style="margin-top:18px;"><span class="power-dot"></span>LIVE CHAT WITH ADMIN</div>
+    <button class="btn power" id="startChatBtn" onclick="openUserChat()">Start Live Chat with Admin</button>
+
+    <div class="chat-box hidden" id="userChatBox" style="margin-top:14px;">
+      <div class="chat-header"><span><span class="status"></span>Leobrain Support</span></div>
+      <div class="chat-messages" id="userChatMessages"></div>
+      <div class="chat-input">
+        <input type="text" id="userChatInput" placeholder="Type a message...">
+        <button class="btn" onclick="userSendMessage()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ STORAGE HELPERS ============ */
+async function getJSON(key, fallback){
+  try{
+    const r = await window.storage.get(key, true);
+    return r ? JSON.parse(r.value) : fallback;
+  }catch(e){ return fallback; }
+}
+async function setJSON(key, value){
+  try{ await window.storage.set(key, JSON.stringify(value), true); }
+  catch(e){ console.error('storage set failed', e); }
+}
+
+/* ============ NAVIGATION ============ */
+let currentAdmin = null;
+let currentUser = null;
+
+function go(view){
+  document.querySelectorAll('.page-view').forEach(v => v.classList.add('hidden'));
+  document.getElementById('view-' + view).classList.remove('hidden');
+  document.querySelectorAll('#navlinks button').forEach(b => b.classList.remove('active'));
+  const navBtn = document.querySelector('#navlinks button[data-nav="' + view + '"]');
+  if(navBtn) navBtn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll('#navlinks button[data-nav]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = btn.getAttribute('data-nav');
+    if(target === 'adminLogin' && currentAdmin){ go('adminDash'); return; }
+    if(target === 'userAuth' && currentUser){ go('userDash'); return; }
+    go(target);
+  });
+});
+
+/* ============ FEEDBACK FORM (home) ============ */
+document.getElementById('feedbackForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('fbName').value.trim();
+  const email = document.getElementById('fbEmail').value.trim();
+  const message = document.getElementById('fbMessage').value.trim();
+  const msgEl = document.getElementById('fbMsg');
+  msgEl.textContent = 'Sending...'; msgEl.className = 'form-msg';
+
+  try{
+    const res = await fetch('https://formspree.io/f/xppzqlow', {
+      method:'POST',
+      headers:{ 'Accept':'application/json', 'Content-Type':'application/json' },
+      body: JSON.stringify({ name, email, message })
+    });
+    if(res.ok){
+      const list = await getJSON('leobrain-feedback', []);
+      list.unshift({ name, email, message, timestamp: new Date().toISOString() });
+      await setJSON('leobrain-feedback', list);
+      msgEl.textContent = 'Thanks! Your request has been sent.'; msgEl.className = 'form-msg ok';
+      e.target.reset();
+    } else {
+      msgEl.textContent = 'Something went wrong — please try again.'; msgEl.className = 'form-msg err';
+    }
+  }catch(err){
+    msgEl.textContent = 'Network error — please try again.'; msgEl.className = 'form-msg err';
+  }
+});
+
+/* ============ ADMIN AUTH ============ */
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'Leobrain@2026';
+
+function adminLogin(){
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value;
+  const msgEl = document.getElementById('adminLoginMsg');
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    currentAdmin = u;
+    document.getElementById('navAdminBtn').textContent = 'Admin Dashboard';
+    go('adminDash');
+    loadAdminRequests();
+    loadAdminChatList();
+    loadAdminUsers();
+  } else {
+    msgEl.textContent = 'Incorrect username or password.'; msgEl.className = 'form-msg err';
+  }
+}
+function logoutAdmin(){
+  currentAdmin = null;
+  document.getElementById('navAdminBtn').textContent = 'Admin Login';
+  go('home');
+}
+
+function setAdminTab(tab){
+  ['requests','chats','users'].forEach(t=>{
+    document.getElementById('adminTab-'+t).classList.toggle('hidden', t!==tab);
+  });
+  document.querySelectorAll('[data-atab]').forEach(b=>b.classList.toggle('active', b.dataset.atab===tab));
+}
+
+async function loadAdminRequests(){
+  const list = await getJSON('leobrain-feedback', []);
+  const box = document.getElementById('requestsList');
+  if(list.length === 0){ box.innerHTML = '<div class="empty-note">No requests yet.</div>'; return; }
+  box.innerHTML = list.map(f => `
+    <div class="card">
+      <h4>${escapeHtml(f.name)} <span style="color:var(--muted); font-weight:500;">(${escapeHtml(f.email)})</span></h4>
+      <div class="meta">${new Date(f.timestamp).toLocaleString()}</div>
+      <p>${escapeHtml(f.message)}</p>
+    </div>`).join('');
+}
+
+async function loadAdminUsers(){
+  const users = await getJSON('leobrain-users', []);
+  const box = document.getElementById('usersList');
+  if(users.length === 0){ box.innerHTML = '<div class="empty-note">No registered users yet.</div>'; return; }
+  box.innerHTML = users.map(u => `
+    <div class="card">
+      <h4>${escapeHtml(u.username)}</h4>
+      <div class="meta">${escapeHtml(u.email)} · joined ${new Date(u.joined).toLocaleDateString()}</div>
+    </div>`).join('');
+}
+
+/* ============ USER AUTH ============ */
+function setAuthTab(tab){
+  document.getElementById('authLogin').classList.toggle('hidden', tab!=='login');
+  document.getElementById('authRegister').classList.toggle('hidden', tab!=='register');
+  document.getElementById('tabLoginBtn').classList.toggle('active', tab==='login');
+  document.getElementById('tabRegisterBtn').classList.toggle('active', tab==='register');
+}
+
+async function registerUser(){
+  const username = document.getElementById('regUser').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPass').value;
+  const msgEl = document.getElementById('regMsg');
+  if(!username || !email || !password){
+    msgEl.textContent = 'Please fill in all fields.'; msgEl.className = 'form-msg err'; return;
+  }
+  const users = await getJSON('leobrain-users', []);
+  if(users.find(u => u.username.toLowerCase() === username.toLowerCase())){
+    msgEl.textContent = 'That username is already taken.'; msgEl.className = 'form-msg err'; return;
+  }
+  users.push({ username, email, password, joined: new Date().toISOString() });
+  await setJSON('leobrain-users', users);
+  msgEl.textContent = 'Account created! You can log in now.'; msgEl.className = 'form-msg ok';
+  setTimeout(()=> setAuthTab('login'), 900);
+}
+
+async function userLogin(){
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+  const msgEl = document.getElementById('loginMsg');
+  const users = await getJSON('leobrain-users', []);
+  const match = users.find(u => u.username.toLowerCase() === username.toLowerCase() && u.password === password);
+  if(!match){
+    msgEl.textContent = 'Incorrect username or password.'; msgEl.className = 'form-msg err'; return;
+  }
+  currentUser = match.username;
+  document.getElementById('navUserBtn').textContent = 'My Dashboard';
+  document.getElementById('userWelcomeName').textContent = 'Welcome, ' + currentUser + '!';
+  go('userDash');
+}
+function logoutUser(){
+  currentUser = null;
+  document.getElementById('navUserBtn').textContent = 'User Login / Register';
+  document.getElementById('userChatBox').classList.add('hidden');
+  go('home');
+}
+
+/* ============ LIVE CHAT ============ */
+let userChatTimer = null;
+let adminChatTimer = null;
+let adminOpenChatUser = null;
+
+function chatKey(username){ return 'leobrain-chat-' + username; }
+
+async function openUserChat(){
+  if(!currentUser){ go('userAuth'); return; }
+  document.getElementById('userChatBox').classList.remove('hidden');
+  const index = await getJSON('leobrain-chat-index', []);
+  if(!index.includes(currentUser)){
+    index.push(currentUser);
+    await setJSON('leobrain-chat-index', index);
+  }
+  await renderUserChat();
+  if(userChatTimer) clearInterval(userChatTimer);
+  userChatTimer = setInterval(renderUserChat, 3500);
+}
+
+async function renderUserChat(){
+  const thread = await getJSON(chatKey(currentUser), []);
+  const box = document.getElementById('userChatMessages');
+  box.innerHTML = thread.map(m => `
+    <div class="bubble ${m.sender==='user' ? 'me' : 'them'}">${escapeHtml(m.text)}<span class="t">${new Date(m.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span></div>
+  `).join('') || '<div class="empty-note">Say hello — our team usually replies quickly.</div>';
+  box.scrollTop = box.scrollHeight;
+}
+
+async function userSendMessage(){
+  const input = document.getElementById('userChatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const thread = await getJSON(chatKey(currentUser), []);
+  thread.push({ sender:'user', text, timestamp: new Date().toISOString() });
+  await setJSON(chatKey(currentUser), thread);
+  input.value = '';
+  renderUserChat();
+}
+document.getElementById('userChatInput').addEventListener('keydown', e=>{ if(e.key==='Enter') userSendMessage(); });
+
+async function loadAdminChatList(){
+  const index = await getJSON('leobrain-chat-index', []);
+  const box = document.getElementById('adminChatList');
+  if(index.length === 0){ box.innerHTML = '<div class="empty-note">No conversations yet.</div>'; return; }
+  let html = '';
+  for(const username of index){
+    const thread = await getJSON(chatKey(username), []);
+    const last = thread[thread.length-1];
+    html += `<div class="chat-list-item" onclick="openAdminChat('${username}')">
+      <div><div class="name">${escapeHtml(username)}</div><div class="preview">${last ? escapeHtml(last.text).slice(0,28) : 'No messages yet'}</div></div>
+    </div>`;
+  }
+  box.innerHTML = html;
+  if(adminChatTimer) clearInterval(adminChatTimer);
+  adminChatTimer = setInterval(()=>{ loadAdminChatList(); if(adminOpenChatUser) renderAdminChat(); }, 4000);
+}
+
+async function openAdminChat(username){
+  adminOpenChatUser = username;
+  document.getElementById('adminChatEmpty').classList.add('hidden');
+  document.getElementById('adminChatBox').classList.remove('hidden');
+  document.getElementById('adminChatWith').textContent = username;
+  await renderAdminChat();
+}
+
+async function renderAdminChat(){
+  if(!adminOpenChatUser) return;
+  const thread = await getJSON(chatKey(adminOpenChatUser), []);
+  const box = document.getElementById('adminChatMessages');
+  box.innerHTML = thread.map(m => `
+    <div class="bubble ${m.sender==='admin' ? 'me' : 'them'}">${escapeHtml(m.text)}<span class="t">${new Date(m.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</span></div>
+  `).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+async function adminSendMessage(){
+  if(!adminOpenChatUser) return;
+  const input = document.getElementById('adminChatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const thread = await getJSON(chatKey(adminOpenChatUser), []);
+  thread.push({ sender:'admin', text, timestamp: new Date().toISOString() });
+  await setJSON(chatKey(adminOpenChatUser), thread);
+  input.value = '';
+  renderAdminChat();
+}
+document.getElementById('adminChatInput').addEventListener('keydown', e=>{ if(e.key==='Enter') adminSendMessage(); });
+
+/* ============ UTIL ============ */
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+go('home');
+</script>
+</body>
+</html>
